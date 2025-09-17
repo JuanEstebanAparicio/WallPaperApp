@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { UiService } from 'src/app/shared/services/ui.service';
+import { SupabaseService } from '../../services/supabase.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -12,18 +13,28 @@ export class LoginPage {
   email = '';
   password = '';
 
-  constructor(private authService: AuthService, private router: Router, private ui: UiService) {}
+  constructor(private authService: AuthService, private router: Router, private ui: UiService, private supabaseService: SupabaseService) {}
 
-  async onLogin() {
-     try {
-          await this.authService.login(this.email, this.password);
-          this.ui.showSuccess('¡Bienvenido de nuevo!');
-          this.router.navigateByUrl('/home', { replaceUrl: true });
-      }   catch (err: any) {
-          this.ui.showError(this.firebaseErrorMessage(err.code));
-}
+async onLogin() {
+  try {
+    // 1. Login en Firebase
+    const cred = await this.authService.login(this.email, this.password);
 
+    // 2. Login en Supabase con las mismas credenciales
+    const { error: supaError } = await this.supabaseService.signInWithSupabase(
+      this.email,
+      this.password
+    );
+    if (supaError) throw supaError;
+
+    // 3. Mensaje y navegación
+    this.ui.showSuccess('¡Bienvenido de nuevo!');
+    this.router.navigateByUrl('/home', { replaceUrl: true });
+
+  } catch (err: any) {
+    this.ui.showError(this.firebaseErrorMessage(err.code || err.message));
   }
+}
  private firebaseErrorMessage(code: string): string {
     switch (code) {
       case 'auth/user-not-found':
