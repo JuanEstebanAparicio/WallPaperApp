@@ -8,9 +8,10 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'register',
     pathMatch: 'full'
-  },  {
+  },
+  {
     path: 'login',
     loadChildren: () => import('./auth/pages/login/login.module').then( m => m.LoginPageModule)
   },
