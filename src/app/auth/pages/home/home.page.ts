@@ -3,7 +3,8 @@ import { Auth, onAuthStateChanged, signOut } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { UiService } from '../../../shared/services/ui.service';
 import { SupabaseService } from '../../services/supabase.service';
-import { doc, setDoc, Firestore } from '@angular/fire/firestore';
+import { Firestore, collection, doc, setDoc } from '@angular/fire/firestore';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -41,27 +42,36 @@ export class HomePage implements OnInit {
     input?.click();
   }
 
-    async onFileSelected(event: any) {
-    const file: File = event.target.files[0];
-    if (!file) return;
-
+ async onFileSelected(event: any) {
     try {
-      const user = this.auth.currentUser;
-      if (!user) throw new Error('No hay usuario autenticado');
+      const file: File = event.target.files[0];
+      if (!file) return;
 
-      const filePath = await this.supabase.uploadWallpaper(file, user.uid);
+      // Usuario actual de Firebase
+      const firebaseUser = this.auth.currentUser;
+      if (!firebaseUser) throw new Error('No hay sesión en Firebase');
 
-      await setDoc(doc(this.firestore, 'wallpapers', filePath), {
-        owner: user.uid,
-        filePath,
+      // 1️⃣ Subir a Supabase (usa UID de Supabase internamente)
+      const filePath = await this.supabase.uploadWallpaper(file);
+
+      // 2️⃣ Crear referencia con ID aleatorio en Firestore
+      const wallpapersCol = collection(this.firestore, 'wallpapers');
+      const newDocRef = doc(wallpapersCol); // genera ID aleatorio
+
+      // 3️⃣ Guardar metadatos en Firestore
+      await setDoc(newDocRef, {
+        ownerUid: firebaseUser.uid, // UID de Firebase para filtrar
+        supabasePath: filePath,     // Ruta en Supabase
         createdAt: new Date()
       });
 
       this.ui.showSuccess('Wallpaper subido con éxito');
+
     } catch (err: any) {
       this.ui.showError(err.message || 'Error al subir wallpaper');
     }
   }
+
 
 
 

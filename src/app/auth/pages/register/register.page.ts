@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-
+import { SupabaseService } from '../../services/supabase.service';
 import { UiService } from 'src/app/shared/services/ui.service';
 
 
@@ -17,23 +17,30 @@ password: string = '';
 confirmPassword: string = '';
 username: string = '';
 
-  constructor(private authService: AuthService, private router: Router, private ui: UiService) { }
+  constructor(private authService: AuthService, private router: Router, private ui: UiService, private supabaseService: SupabaseService) { }
 
   ngOnInit() {
   }
 
 async onRegister() {
-  if (this.password !== this.confirmPassword) {
-    this.ui.showError('Las contraseñas no coinciden');
-    return;
-  }
-
   try {
     await this.authService.register(this.email, this.password, this.username);
-    this.ui.showSuccess('¡Cuenta creada con éxito!');
+
+    // 1) Crear el usuario en Supabase
+    const { error: signUpErr } = await this.supabaseService.signUpWithSupabase(this.email, this.password);
+    if (signUpErr) throw signUpErr;
+
+    // 2) Garantizar sesión (por si no quedó con session)
+    const { error: signInErr } = await this.supabaseService.signInWithSupabase(this.email, this.password);
+    if (signInErr) throw signInErr;
+
+    // 3) Verificación explícita
+    const user = await this.supabaseService.getSupabaseUserIdOrThrow();
+
+    this.ui.showSuccess('¡Cuenta creada y sesión iniciada!');
     this.router.navigateByUrl('/home', { replaceUrl: true });
   } catch (err: any) {
-    this.ui.showError(this.firebaseErrorMessage(err.code));
+    this.ui.showError(err.message || 'Error en registro');
   }
 }
 private firebaseErrorMessage(code: string): string {

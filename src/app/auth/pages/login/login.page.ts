@@ -17,24 +17,19 @@ export class LoginPage {
 
 async onLogin() {
   try {
-    // 1. Login en Firebase
-    const cred = await this.authService.login(this.email, this.password);
+    await this.authService.login(this.email, this.password);
 
-    // 2. Login en Supabase con las mismas credenciales
-    const { error: supaError } = await this.supabaseService.signInWithSupabase(
-      this.email,
-      this.password
-    );
-    if (supaError) throw supaError;
+    const { error: supaErr } = await this.supabaseService.signInWithSupabase(this.email, this.password);
+    if (supaErr) throw supaErr;
 
-    // 3. Mensaje y navegación
-    this.ui.showSuccess('¡Bienvenido de nuevo!');
+    const uid = await this.supabaseService.getSupabaseUserIdOrThrow();
+    this.ui.showSuccess('¡Bienvenido!');
     this.router.navigateByUrl('/home', { replaceUrl: true });
-
   } catch (err: any) {
-    this.ui.showError(this.firebaseErrorMessage(err.code || err.message));
+    this.ui.showError(err.message || 'Error al iniciar sesión');
   }
 }
+
  private firebaseErrorMessage(code: string): string {
     switch (code) {
       case 'auth/user-not-found':
