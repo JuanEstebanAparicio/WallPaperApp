@@ -1,35 +1,52 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Iniciar sesión</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="login-background">
+  <div class="login-container">
+    <ion-card class="login-card">
+      <ion-card-header>
+        <div class="logo-container">
+          <ion-icon name="image-outline" class="app-logo"></ion-icon>
+        </div>
+        <ion-card-title>Bienvenido</ion-card-title>
+        <ion-card-subtitle>Inicia sesión para continuar</ion-card-subtitle>
+      </ion-card-header>
 
-<ion-content class="ion-padding">
-  <form (ngSubmit)="onLogin()">
-    <ion-item>
-      <ion-input
-        [(ngModel)]="email"
-        name="email"
-        type="email"
-        placeholder="Correo electrónico"
-        required
-      ></ion-input>
-    </ion-item>
+      <ion-card-content>
+        <form (ngSubmit)="onLogin()">
+          <ion-item class="input-item">
+            <ion-icon name="mail-outline" slot="start"></ion-icon>
+            <ion-input
+              [(ngModel)]="email"
+              name="email"
+              type="email"
+              placeholder="Correo electrónico"
+              required
+            ></ion-input>
+          </ion-item>
 
-    <ion-item>
-      <ion-input
-        [(ngModel)]="password"
-        name="password"
-        type="password"
-        placeholder="Contraseña"
-        required
-      ></ion-input>
-    </ion-item>
+          <ion-item class="input-item">
+            <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+            <ion-input
+              [(ngModel)]="password"
+              name="password"
+              type="password"
+              placeholder="Contraseña"
+              required
+            ></ion-input>
+          </ion-item>
 
-    <ion-button expand="block" type="submit">Entrar</ion-button>
-<ion-button expand="block" fill="clear" routerLink="/auth/register">
-  Crear cuenta
-</ion-button>
+          <ion-button expand="block" type="submit" class="login-btn">
+            Iniciar sesión
+          </ion-button>
 
-  </form>
+          <ion-button
+            expand="block"
+            fill="clear"
+            class="register-link"
+            routerLink="/auth/register"
+          >
+            ¿No tienes cuenta? Regístrate
+          </ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

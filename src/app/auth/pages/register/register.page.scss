@@ -1,0 +1,47 @@
+.login-background {
+  --background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+}
+
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.login-card {
+  width: 90%;
+  max-width: 380px;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.app-logo {
+  font-size: 50px;
+  color: #2575fc;
+}
+
+.input-item {
+  --background: transparent;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  --padding-start: 10px;
+}
+
+.login-btn {
+  --background: #2575fc;
+  --border-radius: 10px;
+  margin-top: 10px;
+}
+
+.register-link {
+  color: #2575fc;
+  font-weight: bold;
+}
