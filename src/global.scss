@@ -35,3 +35,34 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
+.animated-toast {
+  --border-radius: 12px;
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  font-weight: 500;
+  padding-left: 32px; /* espacio para el icono */
+  position: relative;
+}
+
+.animated-toast::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  mask-size: cover;
+  background-color: white;
+}
+
+.icon-close-circle-outline::before {
+  mask: url('/assets/icons/close-circle-outline.svg') no-repeat center;
+}
+
+.icon-checkmark-circle-outline::before {
+  mask: url('/assets/icons/checkmark-circle-outline.svg') no-repeat center;
+}
+
+.icon-warning-outline::before {
+  mask: url('/assets/icons/warning-outline.svg') no-repeat center;
+}

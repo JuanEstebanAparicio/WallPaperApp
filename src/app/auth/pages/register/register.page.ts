@@ -14,20 +14,28 @@ import { UiService } from 'src/app/shared/services/ui.service';
 export class RegisterPage implements OnInit {
 email: string = '';
 password: string = '';
+confirmPassword: string = '';
+username: string = '';
+
   constructor(private authService: AuthService, private router: Router, private ui: UiService) { }
 
   ngOnInit() {
   }
 
-  async onRegister() {
-    try {
-      await this.authService.register(this.email, this.password);
-      this.ui.showSuccess('¡Cuenta creada con éxito!');
-      this.router.navigateByUrl('/home', { replaceUrl: true });
-    } catch (err: any) {
-      this.ui.showToast(this.firebaseErrorMessage(err.code));
-    }
+async onRegister() {
+  if (this.password !== this.confirmPassword) {
+    this.ui.showError('Las contraseñas no coinciden');
+    return;
   }
+
+  try {
+    await this.authService.register(this.email, this.password, this.username);
+    this.ui.showSuccess('¡Cuenta creada con éxito!');
+    this.router.navigateByUrl('/home', { replaceUrl: true });
+  } catch (err: any) {
+    this.ui.showError(this.firebaseErrorMessage(err.code));
+  }
+}
 private firebaseErrorMessage(code: string): string {
     switch (code) {
       case 'auth/email-already-in-use':

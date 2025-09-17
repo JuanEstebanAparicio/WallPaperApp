@@ -15,13 +15,14 @@ export class LoginPage {
   constructor(private authService: AuthService, private router: Router, private ui: UiService) {}
 
   async onLogin() {
-    try {
-      await this.authService.login(this.email, this.password);
-      this.ui.showSuccess('¡Bienvenido de nuevo!');
-      this.router.navigateByUrl('/home', { replaceUrl: true });
-    } catch (err: any) {
-      this.ui.showToast(this.firebaseErrorMessage(err.code));
-    }
+     try {
+          await this.authService.login(this.email, this.password);
+          this.ui.showSuccess('¡Bienvenido de nuevo!');
+          this.router.navigateByUrl('/home', { replaceUrl: true });
+      }   catch (err: any) {
+          this.ui.showError(this.firebaseErrorMessage(err.code));
+}
+
   }
  private firebaseErrorMessage(code: string): string {
     switch (code) {
