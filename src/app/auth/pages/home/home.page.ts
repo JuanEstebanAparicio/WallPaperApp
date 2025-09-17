@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Auth, onAuthStateChanged, signOut } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { UiService } from '../../../shared/services/ui.service';
+import { SupabaseService } from '../../services/supabase.service';
 
 @Component({
   selector: 'app-home',

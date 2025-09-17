@@ -25,5 +25,7 @@
     <ion-card-content>
       <p>Aquí aparecerán tus wallpapers subidos.</p>
     </ion-card-content>
+    <ion-button expand="block" (click)="selectFile()">Subir wallpaper</ion-button>
+<input type="file" hidden #fileInput (change)="onFileSelected($event)" />
   </ion-card>
 </ion-content>
