@@ -1,0 +1,7 @@
+{
+  "name": "wallpy",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
