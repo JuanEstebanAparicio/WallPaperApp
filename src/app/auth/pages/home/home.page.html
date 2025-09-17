@@ -1,20 +1,29 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Bienvenido</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+<ion-content class="ion-padding home-background">
+  <div class="user-card">
+    <ion-avatar>
+      <ion-icon name="person-circle-outline" class="user-icon"></ion-icon>
+    </ion-avatar>
+    <h2>{{ displayName || 'Usuario' }}</h2>
+    <p>{{ email }}</p>
   </div>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Tus Wallpapers</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Aquí aparecerán tus wallpapers subidos.</p>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
