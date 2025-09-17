@@ -34,5 +34,14 @@ export class HomePage implements OnInit {
     this.ui.showSuccess('Sesión cerrada');
     this.router.navigateByUrl('/auth/login', { replaceUrl: true });
   }
+
+    async selectFile() {
+    const input = document.querySelector<HTMLInputElement>('input[type=file]');
+    input?.click();
+  }
+
+   async onFileSelected(event: any) {
 }
 
+
+}
