@@ -3,7 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebaseConfig: {
+    apiKey: "AIzaSyB7EbvUpz_Te5Eb07vs7rMKD0tv7hsm1VA",
+    authDomain: "wallpy-62beb.firebaseapp.com",
+    projectId: "wallpy-62beb",
+    storageBucket: "wallpy-62beb.firebasestorage.app",
+    messagingSenderId: "880991682714",
+    appId: "1:880991682714:android:772bf4c2a85927986c9f23"
+  }
 };
 
 /*

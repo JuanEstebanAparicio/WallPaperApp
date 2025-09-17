@@ -1,34 +1,30 @@
-import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { Injectable, inject } from '@angular/core';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from '@angular/fire/auth';
+import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  constructor(
-    private afAuth: AngularFireAuth,
-    private afs: AngularFirestore
-  ) {}
+  private auth = inject(Auth);
+  private firestore = inject(Firestore);
 
   async register(email: string, password: string) {
-    const cred = await this.afAuth.createUserWithEmailAndPassword(email, password);
-    if (cred.user) {
-      await this.afs.collection('users').doc(cred.user.uid).set({
-        email,
-        createdAt: new Date()
-      });
-    }
+    // 1. Crear usuario en Firebase Auth
+    const cred = await createUserWithEmailAndPassword(this.auth, email, password);
+
+    // 2. Guardar datos en Firestore (documento con UID como ID)
+    await setDoc(doc(this.firestore, 'users', cred.user.uid), {
+      email,
+      createdAt: new Date()
+    });
+
     return cred;
   }
 
   login(email: string, password: string) {
-    return this.afAuth.signInWithEmailAndPassword(email, password);
+    return signInWithEmailAndPassword(this.auth, email, password);
   }
 
   logout() {
-    return this.afAuth.signOut();
-  }
-
-  getAuthState() {
-    return this.afAuth.authState;
+    return signOut(this.auth);
   }
 }

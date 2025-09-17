@@ -10,19 +10,19 @@ import { AuthService } from '../../services/auth.service';
 export class RegisterPage implements OnInit {
 email: string = '';
 password: string = '';
-  constructor(private auth: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) { }
   
   ngOnInit() {
   }
 
-  async onRegister() {
-    try {
-      await this.auth.register(this.email, this.password);
-      this.router.navigateByUrl('/home', { replaceUrl: true });
-    } catch (err) {
-      console.error(err);
-    }
+async onRegister() {
+  try {
+    await this.authService.register(this.email, this.password);
+    this.router.navigateByUrl('/home', { replaceUrl: true });
+  } catch (err) {
+    console.error('Error en registro:', err);
   }
+}
 }
 
 
