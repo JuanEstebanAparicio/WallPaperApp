@@ -19,16 +19,19 @@ async onLogin() {
   try {
     await this.authService.login(this.email, this.password);
 
-    const { error: supaErr } = await this.supabaseService.signInWithSupabase(this.email, this.password);
-    if (supaErr) throw supaErr;
+    const { error: supaError } = await this.supabaseService.signInWithSupabase(this.email, this.password);
+    if (supaError) throw supaError;
 
-    const uid = await this.supabaseService.getSupabaseUserIdOrThrow();
+    await this.supabaseService.getSupabaseUserIdOrThrow();
+
     this.ui.showSuccess('¡Bienvenido!');
     this.router.navigateByUrl('/home', { replaceUrl: true });
+
   } catch (err: any) {
     this.ui.showError(err.message || 'Error al iniciar sesión');
   }
 }
+
 
  private firebaseErrorMessage(code: string): string {
     switch (code) {

@@ -26,19 +26,16 @@ async onRegister() {
   try {
     await this.authService.register(this.email, this.password, this.username);
 
-    // 1) Crear el usuario en Supabase
-    const { error: signUpErr } = await this.supabaseService.signUpWithSupabase(this.email, this.password);
-    if (signUpErr) throw signUpErr;
+    // Crear usuario en Supabase
+    const { error: supaError } = await this.supabaseService.signUpWithSupabase(this.email, this.password);
+    if (supaError) throw supaError;
 
-    // 2) Garantizar sesión (por si no quedó con session)
-    const { error: signInErr } = await this.supabaseService.signInWithSupabase(this.email, this.password);
-    if (signInErr) throw signInErr;
-
-    // 3) Verificación explícita
-    const user = await this.supabaseService.getSupabaseUserIdOrThrow();
+    // Verificar sesión
+    await this.supabaseService.getSupabaseUserIdOrThrow();
 
     this.ui.showSuccess('¡Cuenta creada y sesión iniciada!');
     this.router.navigateByUrl('/home', { replaceUrl: true });
+
   } catch (err: any) {
     this.ui.showError(err.message || 'Error en registro');
   }
