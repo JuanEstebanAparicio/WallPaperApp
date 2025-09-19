@@ -40,21 +40,18 @@ export class SupabaseService {
   }
 
 
-  async uploadWallpaper(file: File, firebaseUid: string) {
-    const safeName = file.name
-      .replace(/\s+/g, '_')
-      .replace(/[^a-zA-Z0-9._-]/g, '');
+async uploadWallpaper(file: File, firebaseUid: string) {
+  const safeName = file.name.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9._-]/g, '');
+  const filePath = `${firebaseUid}/${Date.now()}-${safeName}`;
 
-    const filePath = `${firebaseUid}/${Date.now()}-${safeName}`;
+  const { error } = await this.supabase
+    .storage
+    .from('wallpapers')
+    .upload(filePath, file, { upsert: false });
 
-    const { error } = await this.supabase
-      .storage
-      .from('wallpapers')
-      .upload(filePath, file, { upsert: false });
-
-    if (error) throw error;
-    return filePath;
-  }
+  if (error) throw error;
+  return filePath;
+}
 
   async getSignedUrl(filePath: string) {
     const { data, error } = await this.supabase

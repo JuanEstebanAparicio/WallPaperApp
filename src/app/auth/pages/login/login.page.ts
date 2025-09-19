@@ -20,8 +20,7 @@ async onLogin() {
   try {
     // 1️⃣ Iniciar sesión en Firebase
     await this.authService.login(this.email, this.password);
-
-    // 2️⃣ Obtener token de Firebase y configurarlo en Supabase
+    
     const firebaseUser = this.auth.currentUser;
     if (!firebaseUser) throw new Error('No hay sesión en Firebase');
     const token = await firebaseUser.getIdToken();
