@@ -50,21 +50,21 @@ async onFileSelected(event: any) {
     const firebaseUser = this.auth.currentUser;
     if (!firebaseUser) throw new Error('No hay sesión en Firebase');
 
-    // Subir a Supabase usando el UID de Firebase
+    // 🔹 Obtener token de Firebase y pasarlo a Supabase
+    const token = await firebaseUser.getIdToken();
+    this.supabase.setAuthToken(token);
+
+    // 🔹 Subir a Supabase
     const filePath = await this.supabase.uploadWallpaper(file, firebaseUser.uid);
 
-    // Guardar referencia en Firestore
-    const wallpapersCol = collection(this.firestore, 'wallpapers');
-    const newDocRef = doc(wallpapersCol);
-
-    await setDoc(newDocRef, {
+    // 🔹 Guardar referencia en Firestore
+    await setDoc(doc(collection(this.firestore, 'wallpapers')), {
       ownerUid: firebaseUser.uid,
       supabasePath: filePath,
       createdAt: new Date()
     });
 
     this.ui.showSuccess('Wallpaper subido con éxito');
-
   } catch (err: any) {
     this.ui.showError(err.message || 'Error al subir wallpaper');
   }
