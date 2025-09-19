@@ -17,18 +17,14 @@ export class LoginPage {
 
 async onLogin() {
   try {
+    // 1️⃣ Iniciar sesión en Firebase
     await this.authService.login(this.email, this.password);
 
-    const { error: supaError } = await this.supabaseService.signInWithSupabase(this.email, this.password);
-    if (supaError) throw supaError;
-
-    await this.supabaseService.getSupabaseUserIdOrThrow();
-
-    this.ui.showSuccess('¡Bienvenido!');
+    this.ui.showSuccess('¡Bienvenido de nuevo!');
     this.router.navigateByUrl('/home', { replaceUrl: true });
 
   } catch (err: any) {
-    this.ui.showError(err.message || 'Error al iniciar sesión');
+    this.ui.showError(this.firebaseErrorMessage(err.code || err.message));
   }
 }
 

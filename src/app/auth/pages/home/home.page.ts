@@ -50,8 +50,8 @@ async onFileSelected(event: any) {
     const firebaseUser = this.auth.currentUser;
     if (!firebaseUser) throw new Error('No hay sesión en Firebase');
 
-    // Subir a Supabase
-    const filePath = await this.supabase.uploadWallpaper(file);
+    // Subir a Supabase usando el UID de Firebase
+    const filePath = await this.supabase.uploadWallpaper(file, firebaseUser.uid);
 
     // Guardar referencia en Firestore
     const wallpapersCol = collection(this.firestore, 'wallpapers');

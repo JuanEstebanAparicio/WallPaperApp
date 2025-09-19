@@ -24,20 +24,14 @@ username: string = '';
 
 async onRegister() {
   try {
+    // 1️⃣ Crear usuario en Firebase y guardar en Firestore
     await this.authService.register(this.email, this.password, this.username);
 
-    // Crear usuario en Supabase
-    const { error: supaError } = await this.supabaseService.signUpWithSupabase(this.email, this.password);
-    if (supaError) throw supaError;
-
-    // Verificar sesión
-    await this.supabaseService.getSupabaseUserIdOrThrow();
-
-    this.ui.showSuccess('¡Cuenta creada y sesión iniciada!');
+    this.ui.showSuccess('¡Cuenta creada con éxito!');
     this.router.navigateByUrl('/home', { replaceUrl: true });
 
   } catch (err: any) {
-    this.ui.showError(err.message || 'Error en registro');
+    this.ui.showError(this.firebaseErrorMessage(err.code || err.message));
   }
 }
 private firebaseErrorMessage(code: string): string {

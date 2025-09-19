@@ -15,21 +15,23 @@ export class SupabaseService {
 });
   }
 
-async uploadWallpaper(file: File) {
+async uploadWallpaper(file: File, firebaseUid: string) {
   if (!(file instanceof File)) throw new Error('Archivo inválido');
-  const { data: { user } } = await this.supabase.auth.getUser();
-  if (!user) throw new Error('No hay sesión en Supabase');
 
-  const safeName = file.name.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9._-]/g, '');
-  const filePath = `${user.id}/${Date.now()}-${safeName}`;
+  const safeName = file.name
+    .replace(/\s+/g, '_')
+    .replace(/[^a-zA-Z0-9._-]/g, '');
 
-  const { error } = await this.supabase.storage.from('wallpapers').upload(filePath, file, { upsert: false });
+  const filePath = `${firebaseUid}/${Date.now()}-${safeName}`;
+
+  const { error } = await this.supabase
+    .storage
+    .from('wallpapers')
+    .upload(filePath, file, { upsert: false });
+
   if (error) throw error;
-
   return filePath;
 }
-
-
 
   async getSignedUrl(filePath: string) {
     const { data, error } = await this.supabase.storage
@@ -41,21 +43,5 @@ async uploadWallpaper(file: File) {
   }
 
 
-
-async signUpWithSupabase(email: string, password: string) {
-  const { error } = await this.supabase.auth.signUp({ email, password });
-  return { error };
-}
-
-async signInWithSupabase(email: string, password: string) {
-  const { error } = await this.supabase.auth.signInWithPassword({ email, password });
-  return { error };
-}
-
-async getSupabaseUserIdOrThrow() {
-  const { data: { user }, error } = await this.supabase.auth.getUser();
-  if (error || !user) throw new Error('No hay sesión en Supabase');
-  return user.id;
-}
 
 }
