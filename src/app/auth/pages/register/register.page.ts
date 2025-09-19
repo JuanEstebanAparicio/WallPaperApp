@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { SupabaseService } from '../../services/supabase.service';
 import { UiService } from 'src/app/shared/services/ui.service';
-
+import { Auth } from '@angular/fire/auth'
 
 @Component({
   selector: 'app-register',
@@ -17,7 +17,7 @@ password: string = '';
 confirmPassword: string = '';
 username: string = '';
 
-  constructor(private authService: AuthService, private router: Router, private ui: UiService, private supabaseService: SupabaseService) { }
+  constructor(private authService: AuthService, private router: Router, private ui: UiService, private supabaseService: SupabaseService, private auth: Auth) { }
 
   ngOnInit() {
   }
@@ -26,6 +26,12 @@ async onRegister() {
   try {
     // 1️⃣ Crear usuario en Firebase y guardar en Firestore
     await this.authService.register(this.email, this.password, this.username);
+
+    // 2️⃣ Obtener token de Firebase y configurarlo en Supabase
+    const firebaseUser = this.auth.currentUser;
+    if (!firebaseUser) throw new Error('No hay sesión en Firebase');
+    const token = await firebaseUser.getIdToken();
+    this.supabaseService.setAuthToken(token);
 
     this.ui.showSuccess('¡Cuenta creada con éxito!');
     this.router.navigateByUrl('/home', { replaceUrl: true });

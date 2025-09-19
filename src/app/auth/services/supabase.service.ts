@@ -21,10 +21,10 @@ export class SupabaseService {
   }
 
 
-  setAuthToken(token: string) {
-    this.supabase = createClient(
-      environment.supabase.supabaseUrl,
-      environment.supabase.supabaseKey,
+      setAuthToken(token: string) {
+       this.supabase = createClient(
+       environment.supabase.supabaseUrl,
+       environment.supabase.supabaseKey,
       {
         global: {
           headers: {
@@ -39,9 +39,7 @@ export class SupabaseService {
     );
   }
 
-  /**
-   * Sube un wallpaper al bucket 'wallpapers' en la carpeta del usuario
-   */
+
   async uploadWallpaper(file: File, firebaseUid: string) {
     const safeName = file.name
       .replace(/\s+/g, '_')
@@ -58,9 +56,6 @@ export class SupabaseService {
     return filePath;
   }
 
-  /**
-   * Genera una URL firmada para acceder a un archivo privado
-   */
   async getSignedUrl(filePath: string) {
     const { data, error } = await this.supabase
       .storage
