@@ -1,0 +1,16 @@
+{
+  "app": {
+    "title": "Bienvenido",
+    "logout": "Cerrar sesión"
+  },
+  "home": {
+    "greeting": "Bienvenido",
+    "upload": "Subir wallpaper",
+    "noWallpapers": "Aquí aparecerán tus wallpapers subidos.",
+    "yourWallpapers": "Tus Wallpapers"
+  },
+  "user": {
+    "defaultName": "Usuario",
+    "email": "Correo electrónico"
+  }
+}

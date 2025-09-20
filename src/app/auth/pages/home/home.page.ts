@@ -4,6 +4,13 @@ import { Router } from '@angular/router';
 import { UiService } from '../../../shared/services/ui.service';
 import { SupabaseService } from '../../services/supabase.service';
 import { Firestore, collection, doc, setDoc } from '@angular/fire/firestore';
+import { TranslateAppService } from 'src/app/auth/services/translate-app.service';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgModule } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
 
 @Component({
   selector: 'app-home',
@@ -11,6 +18,8 @@ import { Firestore, collection, doc, setDoc } from '@angular/fire/firestore';
   styleUrls: ['home.page.scss'],
   standalone: false
 })
+
+  
 export class HomePage implements OnInit {
   private auth = inject(Auth);
   private router = inject(Router);
@@ -19,9 +28,9 @@ export class HomePage implements OnInit {
   private firestore = inject(Firestore);
   displayName: string | null = null;
   email: string | null = null;
-wallpapers: { name: string; url: string }[] = [];
+  wallpapers: { name: string; url: string }[] = [];
 
-  constructor() {}
+  constructor(private translateApp: TranslateAppService) {}
   async ngOnInit(): Promise<void> {
   try {
     const { data: { user } } = await this.supabase.client.auth.getUser();
@@ -36,6 +45,11 @@ wallpapers: { name: string; url: string }[] = [];
   }
 
   }
+  async toggleLang() {
+    await this.translateApp.toggle();
+  }
+
+
 
     async logout() {
     await signOut(this.auth);
@@ -48,7 +62,7 @@ wallpapers: { name: string; url: string }[] = [];
     input?.click();
   }
 
-async onFileSelected(event: any) {
+   async onFileSelected(event: any) {
   try {
     const file: File = event.target.files[0];
     if (!file) return;

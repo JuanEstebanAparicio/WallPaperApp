@@ -1,11 +1,22 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Bienvenido</ion-title>
+
+    <!-- Botón de idioma al inicio -->
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="toggleLang()">
+        <ion-icon slot="icon-only" name="language-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>{{ 'app.title' | translate }}</ion-title>
+
+    <!-- Botón de logout al final -->
     <ion-buttons slot="end">
       <ion-button (click)="logout()">
         <ion-icon name="log-out-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
