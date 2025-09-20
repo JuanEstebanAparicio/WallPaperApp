@@ -22,20 +22,18 @@ export class HomePage implements OnInit {
 wallpapers: { name: string; url: string }[] = [];
 
   constructor() {}
-  ngOnInit(): void {
-  onAuthStateChanged(this.auth, async (user) => {
-    if (user) {
-      this.displayName = user.displayName;
-      this.email = user.email;
-
-      try {
-        this.wallpapers = await this.supabase.listMyWallpapersWithUrls();
-      } catch (err) {
-        console.error('Error listando wallpapers:', err);
-      }
+  async ngOnInit(): Promise<void> {
+  try {
+    const { data: { user } } = await this.supabase.client.auth.getUser();
+    if (!user) {
+      console.warn('No hay sesión en Supabase, intentando restaurar...');
+      // Aquí podrías forzar un login silencioso si tienes email/clave guardados
+      return;
     }
-  });
-
+    this.wallpapers = await this.supabase.listMyWallpapersWithUrls();
+  } catch (err) {
+    console.error('Error listando wallpapers:', err);
+  }
 
   }
 
@@ -55,28 +53,21 @@ async onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (!file) return;
 
-    const firebaseUser = this.auth.currentUser;
-    if (!firebaseUser) throw new Error('No hay sesión en Firebase');
+    const filePath = await this.supabase.uploadWallpaper(file);
 
-    // 🔹 Obtener token de Firebase y pasarlo a Supabase
-    const token = await firebaseUser.getIdToken();
-    this.supabase.setAuthToken(token);
-
-    // 🔹 Subir a Supabase
-    const filePath = await this.supabase.uploadWallpaper(file, firebaseUser.uid);
-
-    // 🔹 Guardar referencia en Firestore
     await setDoc(doc(collection(this.firestore, 'wallpapers')), {
-      ownerUid: firebaseUser.uid,
+      ownerUid: this.auth.currentUser?.uid || null,
       supabasePath: filePath,
       createdAt: new Date()
     });
 
+    this.wallpapers = await this.supabase.listMyWallpapersWithUrls();
     this.ui.showSuccess('Wallpaper subido con éxito');
   } catch (err: any) {
     this.ui.showError(err.message || 'Error al subir wallpaper');
   }
 }
+
 
 
 

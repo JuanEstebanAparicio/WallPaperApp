@@ -17,29 +17,22 @@ password: string = '';
 confirmPassword: string = '';
 username: string = '';
 
-  constructor(private authService: AuthService, private router: Router, private ui: UiService, private supabaseService: SupabaseService, private auth: Auth) { }
+  constructor(private authService: AuthService, private router: Router, private ui: UiService, private supabase: SupabaseService, private auth: Auth) { }
 
   ngOnInit() {
   }
 
 async onRegister() {
   try {
-    // 1️⃣ Crear usuario en Firebase y guardar en Firestore
     await this.authService.register(this.email, this.password, this.username);
-
-    // 2️⃣ Obtener token de Firebase y configurarlo en Supabase
-    const firebaseUser = this.auth.currentUser;
-    if (!firebaseUser) throw new Error('No hay sesión en Firebase');
-    const token = await firebaseUser.getIdToken();
-    this.supabaseService.setAuthToken(token);
-
-    this.ui.showSuccess('¡Cuenta creada con éxito!');
+    this.ui.showSuccess('Cuenta creada con éxito');
     this.router.navigateByUrl('/home', { replaceUrl: true });
-
-  } catch (err: any) {
-    this.ui.showError(this.firebaseErrorMessage(err.code || err.message));
+  } catch (e: any) {
+    this.ui.showError(e.message || 'Error al registrar');
   }
 }
+
+
 private firebaseErrorMessage(code: string): string {
     switch (code) {
       case 'auth/email-already-in-use':

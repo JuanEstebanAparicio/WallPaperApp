@@ -14,25 +14,18 @@ export class LoginPage {
   email = '';
   password = '';
 
-  constructor(private authService: AuthService, private router: Router, private ui: UiService, private supabaseService: SupabaseService, private auth: Auth) {}
+  constructor(private authService: AuthService, private router: Router, private ui: UiService, private supabase: SupabaseService, private auth: Auth) {}
 
 async onLogin() {
   try {
-    // 1️⃣ Iniciar sesión en Firebase
     await this.authService.login(this.email, this.password);
-    
-    const firebaseUser = this.auth.currentUser;
-    if (!firebaseUser) throw new Error('No hay sesión en Firebase');
-    const token = await firebaseUser.getIdToken();
-    this.supabaseService.setAuthToken(token);
-
-    this.ui.showSuccess('¡Bienvenido de nuevo!');
+    this.ui.showSuccess('Bienvenido de nuevo');
     this.router.navigateByUrl('/home', { replaceUrl: true });
-
   } catch (err: any) {
-    this.ui.showError(this.firebaseErrorMessage(err.code || err.message));
+    this.ui.showError(err.message || 'Error al iniciar sesión');
   }
 }
+
 
 
  private firebaseErrorMessage(code: string): string {
