@@ -9,5 +9,27 @@
     "yourWallpapers": "Your Wallpapers",
     "noWallpapers": "Your uploaded wallpapers will appear here.",
     "upload": "Upload wallpaper"
+  },
+
+  "login": {
+    "title": "Welcome",
+    "subtitle": "Log in to continue",
+    "email": "Email",
+    "password": "Password",
+    "button": "Log in",
+    "register": "Don't have an account? Register"
   }
+  ,
+  "register": {
+    "title": "Create account",
+    "subtitle": "Join and upload your wallpapers",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "confirm": "Confirm password",
+    "button": "Register",
+    "login": "Already have an account? Log in"
+  }
+
+
 }

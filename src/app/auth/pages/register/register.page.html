@@ -1,3 +1,13 @@
+<ion-header>
+  <ion-toolbar color="primary" class="register-toolbar">
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="toggleLang()">
+        <ion-icon slot="icon-only" name="language-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content class="login-background">
   <div class="login-container">
     <ion-card class="login-card">
@@ -5,8 +15,8 @@
         <div class="logo-container">
           <ion-icon name="image-outline" class="app-logo"></ion-icon>
         </div>
-        <ion-card-title>Crear cuenta</ion-card-title>
-        <ion-card-subtitle>Únete y sube tus wallpapers</ion-card-subtitle>
+        <ion-card-title>{{ 'register.title' | translate }}</ion-card-title>
+        <ion-card-subtitle>{{ 'register.subtitle' | translate }}</ion-card-subtitle>
       </ion-card-header>
 
       <ion-card-content>
@@ -19,7 +29,7 @@
               [(ngModel)]="username"
               name="username"
               type="text"
-              placeholder="Nombre de usuario"
+              [placeholder]="'register.username' | translate"
               required
             ></ion-input>
           </ion-item>
@@ -31,7 +41,7 @@
               [(ngModel)]="email"
               name="email"
               type="email"
-              placeholder="Correo electrónico"
+              [placeholder]="'register.email' | translate"
               required
             ></ion-input>
           </ion-item>
@@ -43,7 +53,7 @@
               [(ngModel)]="password"
               name="password"
               type="password"
-              placeholder="Contraseña"
+              [placeholder]="'register.password' | translate"
               required
             ></ion-input>
           </ion-item>
@@ -55,14 +65,14 @@
               [(ngModel)]="confirmPassword"
               name="confirmPassword"
               type="password"
-              placeholder="Confirmar contraseña"
+              [placeholder]="'register.confirm' | translate"
               required
             ></ion-input>
           </ion-item>
 
           <!-- Botón registrar -->
           <ion-button expand="block" type="submit" class="login-btn">
-            Registrarse
+            {{ 'register.button' | translate }}
           </ion-button>
 
           <!-- Link a login -->
@@ -72,7 +82,7 @@
             class="register-link"
             routerLink="/auth/login"
           >
-            Ya tengo cuenta
+            {{ 'register.login' | translate }}
           </ion-button>
         </form>
       </ion-card-content>

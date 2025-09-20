@@ -9,5 +9,26 @@
     "yourWallpapers": "Tus Wallpapers",
     "noWallpapers": "Aquí aparecerán tus wallpapers subidos.",
     "upload": "Subir wallpaper"
+  },
+  "login": {
+    "title": "Bienvenido",
+    "subtitle": "Inicia sesión para continuar",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "button": "Iniciar sesión",
+    "register": "¿No tienes cuenta? Regístrate"
+  },
+
+   
+  "register": {
+    "title": "Crear cuenta",
+    "subtitle": "Únete y sube tus wallpapers",
+    "username": "Nombre de usuario",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "confirm": "Confirmar contraseña",
+    "button": "Registrarse",
+    "login": "Ya tengo cuenta"
   }
+
 }

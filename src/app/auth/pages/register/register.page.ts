@@ -5,6 +5,7 @@ import { SupabaseService } from '../../services/supabase.service';
 import { UiService } from 'src/app/shared/services/ui.service';
 import { Auth } from '@angular/fire/auth'
 
+import { TranslateAppService } from '../../services/translate-app.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
@@ -17,7 +18,7 @@ password: string = '';
 confirmPassword: string = '';
 username: string = '';
 
-  constructor(private authService: AuthService, private router: Router, private ui: UiService, private supabase: SupabaseService, private auth: Auth) { }
+  constructor(private authService: AuthService, private router: Router, private ui: UiService, private supabase: SupabaseService, private auth: Auth, private translateApp: TranslateAppService) { }
 
   ngOnInit() {
   }
@@ -30,6 +31,10 @@ async onRegister() {
   } catch (e: any) {
     this.ui.showError(e.message || 'Error al registrar');
   }
+}
+
+async toggleLang() {
+  await this.translateApp.toggle();
 }
 
 

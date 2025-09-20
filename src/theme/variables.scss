@@ -1,2 +1,40 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+:root {
+  /** Fondo y texto base **/
+  --ion-background-color: #0a0a0a; /* negro profundo */
+  --ion-text-color: #e0e0e0;       /* gris claro para contraste */
+
+  /** Colores primarios (azul neón) **/
+  --ion-color-primary: #00bfff;
+  --ion-color-primary-rgb: 0, 191, 255;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #00a6d6;
+  --ion-color-primary-tint: #1ac8ff;
+
+  /** Colores secundarios (morado eléctrico opcional) **/
+  --ion-color-secondary: #8a2be2;
+  --ion-color-secondary-rgb: 138, 43, 226;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #7925c7;
+  --ion-color-secondary-tint: #9b44e5;
+
+  /** Colores de éxito, advertencia y peligro **/
+  --ion-color-success: #00ff9d;
+  --ion-color-warning: #ffcc00;
+  --ion-color-danger: #ff4d4d;
+}
+
+/* Efecto glow para botones primarios */
+ion-button {
+  box-shadow: 0 0 10px var(--ion-color-primary),
+              0 0 20px var(--ion-color-primary);
+}
+
+/* Efecto glow para títulos */
+ion-title {
+  text-shadow: 0 0 5px var(--ion-color-primary),
+               0 0 10px var(--ion-color-primary);
+}

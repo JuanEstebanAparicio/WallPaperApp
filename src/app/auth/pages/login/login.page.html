@@ -1,3 +1,13 @@
+<ion-header>
+  <ion-toolbar color="primary" class="login-toolbar">
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="toggleLang()">
+        <ion-icon slot="icon-only" name="language-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content class="login-background">
   <div class="login-container">
     <ion-card class="login-card">
@@ -5,8 +15,8 @@
         <div class="logo-container">
           <ion-icon name="image-outline" class="app-logo"></ion-icon>
         </div>
-        <ion-card-title>Bienvenido</ion-card-title>
-        <ion-card-subtitle>Inicia sesión para continuar</ion-card-subtitle>
+        <ion-card-title>{{ 'login.title' | translate }}</ion-card-title>
+        <ion-card-subtitle>{{ 'login.subtitle' | translate }}</ion-card-subtitle>
       </ion-card-header>
 
       <ion-card-content>
@@ -17,7 +27,7 @@
               [(ngModel)]="email"
               name="email"
               type="email"
-              placeholder="Correo electrónico"
+              [placeholder]="'login.email' | translate"
               required
             ></ion-input>
           </ion-item>
@@ -28,13 +38,13 @@
               [(ngModel)]="password"
               name="password"
               type="password"
-              placeholder="Contraseña"
+              [placeholder]="'login.password' | translate"
               required
             ></ion-input>
           </ion-item>
 
           <ion-button expand="block" type="submit" class="login-btn">
-            Iniciar sesión
+            {{ 'login.button' | translate }}
           </ion-button>
 
           <ion-button
@@ -43,7 +53,7 @@
             class="register-link"
             routerLink="/auth/register"
           >
-            ¿No tienes cuenta? Regístrate
+            {{ 'login.register' | translate }}
           </ion-button>
         </form>
       </ion-card-content>

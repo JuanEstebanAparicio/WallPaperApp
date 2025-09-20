@@ -32,6 +32,7 @@ export class HomePage implements OnInit {
 
   constructor(private translateApp: TranslateAppService) {}
   async ngOnInit(): Promise<void> {
+    await this.translateApp.init();
   try {
     const { data: { user } } = await this.supabase.client.auth.getUser();
     if (!user) {

@@ -4,6 +4,8 @@ import { AuthService } from '../../services/auth.service';
 import { UiService } from 'src/app/shared/services/ui.service';
 import { SupabaseService } from '../../services/supabase.service';
 import { Auth } from '@angular/fire/auth'
+import { TranslateAppService } from '../../services/translate-app.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -14,7 +16,7 @@ export class LoginPage {
   email = '';
   password = '';
 
-  constructor(private authService: AuthService, private router: Router, private ui: UiService, private supabase: SupabaseService, private auth: Auth) {}
+  constructor(private authService: AuthService, private router: Router, private ui: UiService, private supabase: SupabaseService, private auth: Auth, private translateApp: TranslateAppService) {}
 
 async onLogin() {
   try {
@@ -26,6 +28,9 @@ async onLogin() {
   }
 }
 
+async toggleLang() {
+  await this.translateApp.toggle();
+}
 
 
  private firebaseErrorMessage(code: string): string {
