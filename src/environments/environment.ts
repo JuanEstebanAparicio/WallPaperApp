@@ -3,12 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-    supabase: {
+  supabase: {
     supabaseUrl: 'https://uaxgsngscwzgavefjypb.supabase.co',
     supabaseKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVheGdzbmdzY3d6Z2F2ZWZqeXBiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgwOTQ2NjksImV4cCI6MjA3MzY3MDY2OX0.gV7xYJ_arYVZdFtMC9FxCZpdeBWBI2-bR5g14ouujNk'
-  }
-,
-  production: false,
+  },
+
+  production: true,
   firebaseConfig: {
     apiKey: "AIzaSyB7EbvUpz_Te5Eb07vs7rMKD0tv7hsm1VA",
     authDomain: "wallpy-62beb.firebaseapp.com",
@@ -16,10 +16,9 @@ export const environment = {
     storageBucket: "wallpy-62beb.firebasestorage.app",
     messagingSenderId: "880991682714",
     appId: "1:880991682714:android:772bf4c2a85927986c9f23"
-  },
-
-
+  }
 };
+
 
 
 /*
