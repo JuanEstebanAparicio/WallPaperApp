@@ -23,9 +23,25 @@
       <ion-card-title>Tus Wallpapers</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <p>Aquí aparecerán tus wallpapers subidos.</p>
+      <p *ngIf="!wallpapers.length">Aquí aparecerán tus wallpapers subidos.</p>
+
+      <!-- 📸 Galería de wallpapers -->
+      <ion-grid *ngIf="wallpapers.length">
+        <ion-row>
+          <ion-col size="6" size-md="4" size-lg="3" *ngFor="let wp of wallpapers">
+            <ion-card class="wallpaper-card">
+              <img [src]="wp.url" [alt]="wp.name" />
+              <ion-card-content>
+                <small>{{ wp.name }}</small>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <!-- Botón de subida -->
+      <ion-button expand="block" (click)="selectFile()">Subir wallpaper</ion-button>
+      <input type="file" hidden #fileInput (change)="onFileSelected($event)" />
     </ion-card-content>
-    <ion-button expand="block" (click)="selectFile()">Subir wallpaper</ion-button>
-<input type="file" hidden #fileInput (change)="onFileSelected($event)" />
   </ion-card>
 </ion-content>

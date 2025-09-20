@@ -19,15 +19,23 @@ export class HomePage implements OnInit {
   private firestore = inject(Firestore);
   displayName: string | null = null;
   email: string | null = null;
+wallpapers: { name: string; url: string }[] = [];
 
   constructor() {}
   ngOnInit(): void {
-        onAuthStateChanged(this.auth, (user) => {
-      if (user) {
-        this.displayName = user.displayName;
-        this.email = user.email;
+  onAuthStateChanged(this.auth, async (user) => {
+    if (user) {
+      this.displayName = user.displayName;
+      this.email = user.email;
+
+      try {
+        this.wallpapers = await this.supabase.listMyWallpapersWithUrls();
+      } catch (err) {
+        console.error('Error listando wallpapers:', err);
       }
-    });
+    }
+  });
+
 
   }
 

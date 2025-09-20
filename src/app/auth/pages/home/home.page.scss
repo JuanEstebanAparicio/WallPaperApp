@@ -16,3 +16,15 @@
 ion-avatar {
   margin: 0 auto 10px;
 }
+.wallpaper-card {
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+  ion-card-content {
+    padding: 4px;
+    text-align: center;
+  }
+}
