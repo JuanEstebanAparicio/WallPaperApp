@@ -26,18 +26,18 @@
     <ion-avatar>
       <ion-icon name="person-circle-outline" class="user-icon"></ion-icon>
     </ion-avatar>
-    <h2>{{ displayName || 'Usuario' }}</h2>
+    <h2>{{ displayName || ('user.defaultName' | translate) }}</h2>
     <p>{{ email }}</p>
   </div>
 
   <!-- Lista de wallpapers -->
   <ion-card class="gallery-card">
     <ion-card-header>
-      <ion-card-title>Tus Wallpapers</ion-card-title>
+      <ion-card-title>{{ 'home.yourWallpapers' | translate }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <p *ngIf="!wallpapers.length" class="empty-text">
-        Aquí aparecerán tus wallpapers subidos.
+        {{ 'home.noWallpapers' | translate }}
       </p>
 
       <ion-grid *ngIf="wallpapers.length">
@@ -54,7 +54,9 @@
       </ion-grid>
 
       <!-- Botón de subida -->
-      <ion-button expand="block" (click)="selectFile()">Subir wallpaper</ion-button>
+      <ion-button expand="block" (click)="selectFile()">
+        {{ 'home.upload' | translate }}
+      </ion-button>
       <input type="file" hidden #fileInput (change)="onFileSelected($event)" />
     </ion-card-content>
   </ion-card>
